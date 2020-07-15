@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import TopicList from '../TopicList/topicList';
-
+import Post from '../Post/post';
 function Dashboard() {
   const [topics, setTopics] = useState({});
   const [topicIds, setTopicIds] = useState([]);
@@ -52,9 +52,25 @@ function Dashboard() {
     setTopics(newEntities);
   };
 
+  const addTopic = (title) => {
+    console.log('add topic');
+    const newEntities = { ...topics };
+    const newTopic = {
+      _id: 'sdk92k20elked202doe5doge',
+      title: title,
+      published_at: new Date().toISOString(),
+      score: 0,
+      inList: true,
+    };
+    newEntities[newTopic._id] = newTopic;
+    setTopics(newEntities);
+    setTopicIds([...topicIds, newTopic._id]);
+  };
+
   return (
     <div className="dashboard" key={topicIds}>
-      {console.log('rendering', topics)}
+      {console.log('rendering', topicIds)}
+      <Post addTopic={addTopic}></Post>
       <TopicList
         topics={topicIds
           .map((id) => topics[id])
