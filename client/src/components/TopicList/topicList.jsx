@@ -1,6 +1,6 @@
 import React from 'react';
 import ListItem from '../ListItem/listItem';
-
+import './topicList.css';
 function topicList(props) {
   return (
     <div className="topic-list">

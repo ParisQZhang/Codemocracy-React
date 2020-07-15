@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './post.css';
 
 function Post(props) {
   const [value, setValue] = useState('');
@@ -14,10 +15,17 @@ function Post(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" value={value} onChange={handleChange} />
-      <input type="submit" value="Add Topic" />
-    </form>
+    <div className="post">
+      <form onSubmit={handleSubmit}>
+        <input
+          className="text"
+          type="text"
+          value={value}
+          onChange={handleChange}
+        />
+        <input className="submit" type="submit" value="Add Topic" />
+      </form>
+    </div>
   );
 }
 

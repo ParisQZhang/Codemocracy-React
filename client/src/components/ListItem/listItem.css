@@ -1,26 +1,70 @@
-* {
-  box-sizing: border-box;
-}
-
 .list-item {
-  display: flex;
-  width: 90%;
+  width: 85%;
   height: 120px;
-  align-items: center;
-  border: 1px solid black;
-  box-shadow: 2px 2px 1px 1px grey;
-  padding: 50px;
+  background-color: white;
+  border: 1px solid lightgray;
+  padding: 0;
+  box-shadow: 1px 1px 1px 1px grey;
   margin: 20px;
+  position: relative;
 }
 
 .list-item h1 {
   font-size: x-large;
+  position: absolute;
+  background-color: white;
+  left: 130px;
+  top: 10px;
 }
 
 .list-item h2 {
   font-size: small;
+  position: absolute;
+  background-color: white;
+  left: 130px;
+  top: 50px;
 }
 
 .list-item p {
   display: inline;
+  position: absolute;
+  left: 42px;
+  bottom: 30px;
+  font-weight: bolder;
+  background-color: white;
+  font-size: large;
+}
+
+.up {
+  background-image: url('../Icons/upButton.svg');
+  border: none;
+  padding: 2px 45px 35px 15px;
+  margin: 0;
+  position: absolute;
+  left: 20px;
+  top: 10px;
+}
+
+.down {
+  background-image: url('../Icons/downButton.svg');
+  border: none;
+  padding: 2px 45px 35px 15px;
+  margin: 0;
+  position: absolute;
+  left: 20px;
+  bottom: 10px;
+}
+
+.delete {
+  background-image: url('../Icons/delete.svg');
+  border: none;
+  padding: 2px 20px 30px 15px;
+  margin: 0;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+button {
+  background-color: white;
 }

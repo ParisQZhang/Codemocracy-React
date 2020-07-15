@@ -7,10 +7,18 @@ function ListItem(props) {
       {console.log('in item', { props })}
       <h1>{props.topic.title}</h1>
       <h2>{props.topic.published_at}</h2>
-      <p>{props.topic.score}</p>
-      <button onClick={() => props.voteUp(props.topic)}>🔼</button>
-      <button onClick={() => props.voteDown(props.topic)}>🔽</button>
-      <button onClick={() => props.deleteTopic(props.topic)}>❌</button>
+      <button className="up" onClick={() => props.voteUp(props.topic)}></button>
+      <div className="left">
+        <button
+          className="down"
+          onClick={() => props.voteDown(props.topic)}
+        ></button>
+        <p>{props.topic.score}</p>
+        <button
+          className="delete"
+          onClick={() => props.deleteTopic(props.topic)}
+        ></button>
+      </div>
     </div>
   );
 }
