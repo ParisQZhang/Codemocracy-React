@@ -5,8 +5,7 @@ import Post from '../Post/post';
 function Dashboard() {
   const [topics, setTopics] = useState({});
   const [topicIds, setTopicIds] = useState([]);
-  const allTopicUrl =
-    'https://private-anon-19bf69d8d6-codemocracy.apiary-mock.com/topics';
+  const allTopicUrl = 'http://localhost:3053/topics';
 
   const loadData = async () => {
     const res = await fetch(allTopicUrl);
