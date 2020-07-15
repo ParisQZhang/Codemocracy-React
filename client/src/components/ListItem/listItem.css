@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+
+.list-item {
+  display: flex;
+  width: 90%;
+  height: 120px;
+  align-items: center;
+  border: 1px solid black;
+  box-shadow: 2px 2px 1px 1px grey;
+  padding: 50px;
+  margin: 20px;
+}
+
+.list-item h1 {
+  font-size: x-large;
+}
+
+.list-item h2 {
+  font-size: small;
+}
+
+.list-item p {
+  display: inline;
+}
