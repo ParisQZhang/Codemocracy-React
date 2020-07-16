@@ -16,7 +16,7 @@ exports.newTopic = async (req, res) => {
     console.log('inside POST');
     await topics.create({ title: req.body.title });
     res.status(201);
-    res.send(await topics.find({ title: req.body.title }));
+    res.send(await topics.findOne({ title: req.body.title }));
   } catch (err) {
     res.sendStatus(500);
     if (err) throw err;
@@ -42,8 +42,13 @@ exports.voteUp = async (req, res) => {
   try {
     console.log('inside PUT UP');
     const id = req.params.id;
-    await topics.updateOne({ _id: id }, { $inc: { score: 1 } });
-    res.send(await topics.find({ _id: id }));
+    res.send(
+      await topics.findByIdAndUpdate(
+        { _id: id },
+        { $inc: { score: 1 } },
+        { new: true }
+      )
+    );
     res.status(200);
   } catch (err) {
     res.status(500);
@@ -55,8 +60,13 @@ exports.voteDown = async (req, res) => {
   try {
     console.log('inside PUT DOWN');
     const id = req.params.id;
-    await topics.updateOne({ _id: id }, { $inc: { score: -1 } });
-    res.send(await topics.find({ _id: id }));
+    res.send(
+      await topics.findByIdAndUpdate(
+        { _id: id },
+        { $inc: { score: -1 } },
+        { new: true }
+      )
+    );
     res.status(200);
   } catch (err) {
     res.status(500);

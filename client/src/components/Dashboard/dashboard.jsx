@@ -18,25 +18,24 @@ function Dashboard() {
   }, []);
 
   const voteUp = (id) => {
-    ApiService.voteUpTopic(id).then((updatedTopics) => {
-      //change array to object
+    ApiService.voteUpTopic(id).then((updatedTopic) => {
       setTopics((newTopics) => {
         const target = newTopics.find(
-          (topic) => topic._id === updatedTopics[0]._id
+          (topic) => topic._id === updatedTopic._id
         );
-        target.score = updatedTopics[0].score;
+        target.score = updatedTopic.score;
         return [...newTopics];
       });
     });
   };
 
   const voteDown = (id) => {
-    ApiService.voteDownTopic(id).then((updatedTopics) => {
+    ApiService.voteDownTopic(id).then((updatedTopic) => {
       setTopics((newTopics) => {
         const target = newTopics.find(
-          (topic) => topic._id === updatedTopics[0]._id
+          (topic) => topic._id === updatedTopic._id
         );
-        target.score = updatedTopics[0].score;
+        target.score = updatedTopic.score;
         return [...newTopics];
       });
     });
@@ -53,7 +52,7 @@ function Dashboard() {
 
   const addTopic = (title) => {
     ApiService.postTopic(title).then((topic) => {
-      setTopics((topics) => [...topics, topic[0]]);
+      setTopics((topics) => [...topics, topic]);
     });
   };
 
