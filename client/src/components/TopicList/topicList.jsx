@@ -1,19 +1,17 @@
 import React from 'react';
 import ListItem from '../ListItem/listItem';
 import './topicList.css';
-function topicList(props) {
+function topicList({ topics, voteUp, voteDown, deleteTopic }) {
   return (
     <div className="topic-list">
-      {console.log(props)}
-      {props.topics.map((topic) => {
+      {topics.map((topic) => {
         return (
           <ListItem
             key={topic._id}
-            topics={props.topics}
             topic={topic}
-            voteUp={props.voteUp}
-            voteDown={props.voteDown}
-            deleteTopic={props.deleteTopic}
+            voteUp={voteUp}
+            voteDown={voteDown}
+            deleteTopic={deleteTopic}
           ></ListItem>
         );
       })}

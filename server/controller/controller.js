@@ -2,7 +2,8 @@ const topics = require('../model/topic');
 
 exports.getTopics = async (req, res) => {
   try {
-    res.send(await topics.find({}));
+    console.log('inside GET');
+    res.send(await topics.find({})); //===res.JSON() res.send does stringify by default too
     res.status(200);
   } catch (err) {
     res.sendStatus = 500;
@@ -12,14 +13,10 @@ exports.getTopics = async (req, res) => {
 
 exports.newTopic = async (req, res) => {
   try {
-    const newTopic = {
-      title: req.body.title,
-      published_at: new Date().toISOString(),
-      score: Number(0),
-    };
-    await topics.create(newTopic);
+    console.log('inside POST');
+    await topics.create({ title: req.body.title });
     res.status(201);
-    res.send();
+    res.send(await topics.find({ title: req.body.title }));
   } catch (err) {
     res.sendStatus(500);
     if (err) throw err;
@@ -28,11 +25,12 @@ exports.newTopic = async (req, res) => {
 
 exports.deleteTopicWithId = async (req, res) => {
   try {
+    console.log('inside DELETE');
     const id = req.params.id;
     await topics.deleteOne({ _id: id }, function (err) {
       if (err) throw err;
     });
-    res.status(200);
+    res.status(204);
     res.send();
   } catch (err) {
     res.sendStatus(500);
@@ -42,6 +40,7 @@ exports.deleteTopicWithId = async (req, res) => {
 
 exports.voteUp = async (req, res) => {
   try {
+    console.log('inside PUT UP');
     const id = req.params.id;
     await topics.updateOne({ _id: id }, { $inc: { score: 1 } });
     res.send(await topics.find({ _id: id }));
@@ -54,6 +53,7 @@ exports.voteUp = async (req, res) => {
 
 exports.voteDown = async (req, res) => {
   try {
+    console.log('inside PUT DOWN');
     const id = req.params.id;
     await topics.updateOne({ _id: id }, { $inc: { score: -1 } });
     res.send(await topics.find({ _id: id }));

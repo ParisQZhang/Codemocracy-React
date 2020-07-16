@@ -2,26 +2,14 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import TopicList from '../TopicList/topicList';
 import Post from '../Post/post';
+import ApiService from '../../ApiService';
+
 function Dashboard() {
-  const [topics, setTopics] = useState({});
-  const [topicIds, setTopicIds] = useState([]);
-  const allTopicUrl = 'http://localhost:3053/topics';
+  const [topics, setTopics] = useState([]);
 
   const loadData = async () => {
-    const res = await fetch(allTopicUrl);
-    res.json().then((data) => {
-      try {
-        const newEntities = data.reduce((acc, topic) => {
-          return {
-            ...acc,
-            [topic._id]: Object.assign(topic, { inList: true }),
-          };
-        }, {});
-        setTopics(newEntities);
-        setTopicIds(Object.keys(newEntities));
-      } catch (err) {
-        console.log(err);
-      }
+    ApiService.getTopics().then((topics) => {
+      setTopics(topics);
     });
   };
 
@@ -29,52 +17,51 @@ function Dashboard() {
     loadData();
   }, []);
 
-  useEffect(() => {
-    console.log(topicIds);
-  }, [topicIds]);
-
-  const voteUp = (topic) => {
-    const newEntities = { ...topics };
-    newEntities[topic._id].score++;
-    setTopics(newEntities);
+  const voteUp = (id) => {
+    ApiService.voteUpTopic(id).then((updatedTopics) => {
+      //change array to object
+      setTopics((newTopics) => {
+        const target = newTopics.find(
+          (topic) => topic._id === updatedTopics[0]._id
+        );
+        target.score = updatedTopics[0].score;
+        return [...newTopics];
+      });
+    });
   };
 
-  const voteDown = (topic) => {
-    const newEntities = { ...topics };
-    newEntities[topic._id].score--;
-    setTopics(newEntities);
+  const voteDown = (id) => {
+    ApiService.voteDownTopic(id).then((updatedTopics) => {
+      setTopics((newTopics) => {
+        const target = newTopics.find(
+          (topic) => topic._id === updatedTopics[0]._id
+        );
+        target.score = updatedTopics[0].score;
+        return [...newTopics];
+      });
+    });
   };
 
-  const deleteTopic = (topic) => {
-    const newEntities = { ...topics };
-    newEntities[topic._id].inList = false;
-    setTopics(newEntities);
+  const deleteTopic = (id) => {
+    ApiService.deleteTopic(id).then(() => {
+      setTopics((topicList) => {
+        const newList = topicList.filter((topic) => topic._id !== id);
+        return [...newList];
+      });
+    });
   };
 
   const addTopic = (title) => {
-    console.log('add topic');
-    const newEntities = { ...topics };
-    const newTopic = {
-      _id: 'sdk92k20elked202doe5doge',
-      title: title,
-      published_at: new Date().toISOString(),
-      score: 0,
-      inList: true,
-    };
-    newEntities[newTopic._id] = newTopic;
-    setTopics(newEntities);
-    setTopicIds([...topicIds, newTopic._id]);
+    ApiService.postTopic(title).then((topic) => {
+      setTopics((topics) => [...topics, topic[0]]);
+    });
   };
 
   return (
-    <div className="dashboard" key={topicIds}>
-      {console.log('rendering', topicIds)}
+    <div className="dashboard">
       <Post addTopic={addTopic}></Post>
       <TopicList
-        topics={topicIds
-          .map((id) => topics[id])
-          .filter((topic) => topic.inList === true)
-          .sort((a, b) => b.score - a.score)}
+        topics={topics.sort((a, b) => b.score - a.score)}
         voteUp={voteUp}
         voteDown={voteDown}
         deleteTopic={deleteTopic}

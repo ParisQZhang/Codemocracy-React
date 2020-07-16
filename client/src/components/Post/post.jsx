@@ -9,9 +9,9 @@ function Post(props) {
   };
 
   const handleSubmit = (event) => {
-    console.log(value);
     props.addTopic(value);
     event.preventDefault();
+    setValue('');
   };
 
   return (

@@ -1,22 +1,18 @@
 import React from 'react';
 import './listItem.css';
 
-function ListItem(props) {
+function ListItem({ topic, voteDown, voteUp, deleteTopic }) {
   return (
     <div className="list-item">
-      {console.log('in item', { props })}
-      <h1>{props.topic.title}</h1>
-      <h2>{props.topic.published_at}</h2>
-      <button className="up" onClick={() => props.voteUp(props.topic)}></button>
+      <h1>{topic.title}</h1>
+      <h2>{topic.published_at}</h2>
+      <button className="up" onClick={() => voteUp(topic._id)}></button>
       <div className="left">
-        <button
-          className="down"
-          onClick={() => props.voteDown(props.topic)}
-        ></button>
-        <p>{props.topic.score}</p>
+        <button className="down" onClick={() => voteDown(topic._id)}></button>
+        <p>{topic.score}</p>
         <button
           className="delete"
-          onClick={() => props.deleteTopic(props.topic)}
+          onClick={() => deleteTopic(topic._id)}
         ></button>
       </div>
     </div>
